@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data@NoArgsConstructor@AllArgsConstructor@ToString
 @Table(name = "experience")
 @Entity
-public class Experience {
+public class Experience implements Serializable {
     @Id
     private long id;
     @Column(columnDefinition = "date")

@@ -11,7 +11,7 @@ import java.util.List;
 @ToString @Data @AllArgsConstructor @NoArgsConstructor
 @Entity
 @Table(name = "job")
-public class Job {
+public class Job implements java.io.Serializable {
     @Id
     private long id;
     @Column

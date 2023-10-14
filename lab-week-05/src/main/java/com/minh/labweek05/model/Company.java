@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Data@NoArgsConstructor@AllArgsConstructor@ToString
 @Entity
 @Table(name = "company")
-public class Company {
+public class Company implements Serializable {
     @Id
     private long id;
     @Column

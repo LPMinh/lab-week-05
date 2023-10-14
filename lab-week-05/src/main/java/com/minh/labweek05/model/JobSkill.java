@@ -7,10 +7,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
+
 @Data@AllArgsConstructor@NoArgsConstructor@ToString
 @Entity
 @Table(name = "job_skill")
-public class JobSkill {
+@IdClass(JobSkill.class)
+public class JobSkill implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private SkillLevel skillLevel;
     @Id

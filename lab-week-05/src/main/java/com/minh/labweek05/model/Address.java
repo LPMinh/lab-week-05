@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +17,7 @@ import java.util.Set;
 @ToString
 @Entity
 @Table(name = "address")
-public class Address {
+public class Address  implements Serializable {
     @Column(columnDefinition = "varchar(50)")
     private String city;
     @Column(columnDefinition = "smallint(6)")

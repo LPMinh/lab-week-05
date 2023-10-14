@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name = "candidate")
-public class Candidate {
+public class Candidate implements Serializable {
     private String phone;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
