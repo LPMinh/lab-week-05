@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Job Skill</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-5">
+
+  <h1 class="mb-4">Add Job Skill</h1>
+
+  <!-- Your form for adding a new job skill goes here -->
+  <form id="jobSkillForm" th:action="@{/add-job-skill}" th:method="post">
+    <input type="hidden" name="jobId" th:value="${job.getId()}"/>
+    <div class="form-group">
+      <label for="skillLevel">Skill Level:</label>
+      <!-- Assuming you have an Enum for SkillLevel, you can use a select dropdown -->
+      <select class="form-control" id="skillLevel" name="skillLevel" required>
+        <!-- Add options dynamically based on SkillLevel enum values -->
+        <option value="MASTER">Master</option>
+        <option value="BEGINNER">Beginner</option>
+        <option value="ADVANCED">Advanced</option>
+        <option value="PROFESSIONAL">Professional</option>
+        <option value="INTERMEDIATE">Intermediate</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="moreInfo">More Info:</label>
+      <input type="text" class="form-control" id="moreInfo" name="moreInfo" required>
+    </div>
+    <div class="form-group">
+      <label for="type">Skill Type:</label>
+      <!-- Assuming you have an Enum for SkillType, you can use a select dropdown -->
+      <select class="form-control" id="type" name="type" required>
+        <!-- Add options dynamically based on SkillType enum values -->
+        <option value="SOFT_SKILL">Soft Skill</option>
+        <option value="UNSPECIFIC">Unspecific</option>
+        <option value="TECHNICAL_SKILL">Technical Skill</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="skillName">Skill Name:</label>
+      <input type="text" class="form-control" id="skillName" name="skillName" required>
+    </div>
+
+    <div class="form-group">
+      <label for="skillDescription">Skill Description:</label>
+      <textarea class="form-control" id="skillDescription" name="skillDescription" required></textarea>
+    </div>
+
+    <!-- Add other fields for job skills as needed -->
+
+    <button type="submit" class="btn btn-primary" onclick="saveJobSkill()">Save Job Skill</button>
+  </form>
+  <h2>List Job Skill</h2>
+  <table>
+    <tr>
+        <th>Skill Level</th>
+        <th>More Info</th>
+        <th>Skill Type</th>
+        <th>Skill Name</th>
+        <th>Skill Description</th>
+    </tr>
+    <tbody th:if="${job.getJobSkills()!=null}">
+      <tr th:each="jk:${job.getJobSkills()}">
+        <td th:text="${jk.getSkillLevel()}"></td>
+        <td th:text="${jk.getMoreInfo()}"></td>
+        <td th:text="${jk.getSkill().getType()}"></td>
+        <td th:text="${jk.getSkill().getSkillName()}"></td>
+        <td th:text="${jk.getSkill().getSkillDescription()}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  // Function to save the job skill (you can customize this based on your needs)
+  function saveJobSkill() {
+    // Add your logic to save the job skill details here
+    // For example, you can use JavaScript to fetch values from the form and send them to the server
+    // After saving, you may want to redirect to another page or perform some other action
+    alert('Job Skill saved!');
+    // Redirect to another page if needed
+    // window.location.href = 'someOtherPage.html';
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Candidate Registration</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-0wo9uPTdcOX+cx4Gxpt7a2HgPzTWq0IZh5FwS6/zUC2L1KeV5vNTZd1zgPR6I5vXw7NTKV5KMJ8y1y+4uxXA7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .registration-container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .icon {
+      position: relative;
+      top: 6px;
+      margin-right: 5px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="registration-container">
+  <h2><i class="icon fas fa-user-plus"></i> Candidate Registration</h2>
+
+  <form th:action="@{/register/candidate}" method="post" th:object="${candidate}">
+    <input type="hidden" name="email" th:value="${email}">
+    <input type="hidden" name="password" th:value="${password}">
+
+    <label for="fullName">Full Name:</label>
+    <input type="text" id="fullName" name="fullName" th:field="*{fullName}" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" th:field="*{email}" required>
+
+    <label for="phone">Phone:</label>
+    <input type="text" id="phone" name="phone" th:field="*{phone}" required>
+
+    <label for="dob">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" th:field="*{dob}" required>
+
+    <label for="address">Address:</label>
+    <input type="text" id="street" name="address.street" th:field="*{address.street}" placeholder="Street" required>
+
+    <input type="text" id="city" name="address.city" th:field="*{address.city}" placeholder="City" required>
+
+    <input type="text" id="country" name="address.country" th:field="*{address.country}" placeholder="Country" required>
+
+    <input type="text" id="zip" name="address.zipCode" th:field="*{address.zipCode}" placeholder="ZIP Code" required>
+
+    <button type="submit"><i class="icon fas fa-check"></i> Register</button>
+  </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trang Chủ Tuyển Dụng</title>
+  <!-- Thêm liên kết đến Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="#" th:href="@{/}">Trang Chủ</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+          aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" th:href="@{/profile/{id}(id=${candidate.getId()})}">Hồ sơ</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" th:href="@{/logout}">Đăng xuất</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- Nội dung trang chủ -->
+<div class="container mt-3">
+  <h1>Chào mừng đến trang chủ tuyển dụng!</h1>
+  <form th:action="@{/search-job}" th:method="get">
+    <h3>Tìm công việc</h3>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="searchTerm">Tìm kiếm:</label>
+        <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Nhập từ khóa tìm kiếm">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="position">Chức vụ:</label>
+        <select class="form-control js-example-basic-multiple" id="position" name="level" >
+          <!-- Add options for job positions -->
+          <option th:each="level:${skillLevels}"  th:value="${level.name()}" th:text="${level.name()}"></option>
+          <!-- Add more positions as needed -->
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="city">Thành phố:</label>
+        <select class="form-control js-example-basic-multiple" id="city" name="city" multiple="multiple">
+          <!-- Add options for city names -->
+          <option value="hanoi">Hanoi</option>
+          <option value="hoChiMinh">Ho Chi Minh City</option>
+          <!-- Add more city names as needed -->
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+  </form>
+  <h3>Gợi ý Công việc phù hợp/ ở gần bạn</h3>
+  <div th:each="job : ${jobSuggest}">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 th:text="${job.getName()}"></h5>
+      </div>
+      <div class="card-body">
+        <p th:text="${job.getDescription()}"></p>
+
+        <h6>Company:
+          <span th:text="${job.company.name}"></span></h6>
+        <p>Address:<br>
+          City:  <span th:text="${job.company.address.city}"></span>
+            <br>
+          Street: <span th:text="${job.company.address.street}"></span>
+            <br>
+            Zip Code: <span th:text="${job.company.address.zipCode}"></span>
+
+        </p>
+
+        <h6>Skills Required:</h6>
+        <ul>
+          <li th:each="jobSkill : ${job.jobSkills}">
+            <span th:text="${jobSkill.skill.skillName}"></span> - <span th:text="${jobSkill.skillLevel}"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+    <h3>Các công việc khác</h3>
+  <div th:each="job : ${jobPage.getContent()}">
+    <div class="card mb-3">
+      <div class="card-header">
+        <h5 th:text="${job.getName()}"></h5>
+      </div>
+      <div class="card-body">
+        <p th:text="${job.getDescription()}"></p>
+
+        <h6>Company:
+          <span th:text="${job.company.name}"></span></h6>
+        <p>Address:<br>
+          City:  <span th:text="${job.company.address.city}"></span>
+          <br>
+          Street: <span th:text="${job.company.address.street}"></span>
+          <br>
+          Zip Code: <span th:text="${job.company.address.zipCode}"></span>
+
+        </p>
+
+        <h6>Skills Required:</h6>
+        <ul>
+          <li th:each="jobSkill : ${job.jobSkills}">
+            <span th:text="${jobSkill.skill.skillName}"></span> - <span th:text="${jobSkill.skillLevel}"></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <nav aria-label="Page navigation example">
+    <div th:if="${jobPage.totalPages > 1}">
+      <ul class="pagination">
+        <li th:class="${jobPage.number == 0} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" th:href="@{/candidate?page=${jobPage.number - 1}&size=${jobPage.size}}">Previous</a>
+        </li>
+
+        <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+            th:class="${pageNumber == jobPage.number} ? 'page-item active' : 'page-item'">
+          <a class="page-link" th:href="@{'/candidate'(page=${pageNumber},size=${jobPage.size})}" th:text="${pageNumber + 1}"></a>
+
+        </li>
+
+        <li th:class="${jobPage.number == jobPage.totalPages - 1} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" th:href="@{/candidate?page=${jobPage.number + 1}&size=${jobPage.size}}">Next</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Nội dung trang chủ sẽ được thêm vào đây -->
+</div>
+<script>
+  $(document).ready(function() {
+    // Apply Select2 to the position and city select elements
+    $('#position').select2();
+    $('#city').select2();
+  });
+</script>
+<!-- Thêm liên kết đến Bootstrap JS và Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

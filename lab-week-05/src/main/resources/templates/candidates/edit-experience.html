@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <!-- Include Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Add your other styles here -->
+
+  <style>
+    /* Your existing styles */
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Your existing content -->
+
+  <h2>Edit Experience</h2>
+
+  <form th:action="@{/saveExperience}" method="post">
+    <!-- Add hidden input for the experience ID -->
+    <input type="hidden" th:name="id" th:value="${experience.id}" />
+
+    <!-- Your form fields for editing experience -->
+    <div class="form-group">
+      <label for="companyName">Company Name:</label>
+      <input type="text" class="form-control" id="companyName" th:name="companyName" th:value="${experience.companyName}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="role">Position:</label>
+      <input type="text" class="form-control" id="role" th:name="role" th:value="${experience.role}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="fromDate">Start Date:</label>
+      <input type="date" class="form-control" id="fromDate" th:name="fromDate" th:value="${experience.fromDate}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="toDate">End Date:</label>
+      <input type="date" class="form-control" id="toDate" th:name="toDate" th:value="${experience.toDate}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="workDescription">Description:</label>
+      <textarea class="form-control" id="workDescription" th:name="workDescription" rows="4" required>${experience.workDescription}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+  </form>
+</div>
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

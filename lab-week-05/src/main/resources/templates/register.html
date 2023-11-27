@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Tài Khoản</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-0wo9uPTdcOX+cx4Gxpt7a2HgPzTWq0IZh5FwS6/zUC2L1KeV5vNTZd1zgPR6I5vXw7NTKV5KMJ8y1y+4uxXA7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/register}" th:method="post">
+    <h2><i class="icon fas fa-user-plus"></i> Đăng Ký Tài Khoản</h2>
+    <input type="hidden">
+    <input type="radio" id="candidate" name="accountType" value="candidate" checked>
+    <label for="candidate"><i class="icon fas fa-user"></i> Ứng Viên</label>
+    <input type="radio" id="company" name="accountType" value="company">
+    <label for="company"><i class="icon fas fa-building"></i> Công Ty</label>
+
+    <label for="name"><i class="icon fas fa-user"></i> Tên:</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email"><i class="icon fas fa-envelope"></i> Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password"><i class="icon fas fa-lock"></i> Mật Khẩu:</label>
+    <input type="password" id="password" name="password" required>
+
+    <!-- Các trường thông tin bổ sung có thể thêm ở đây -->
+
+    <button type="submit"><i class="icon fas fa-check"></i> Đăng Ký</button>
+</form>
+</body>
+</html>

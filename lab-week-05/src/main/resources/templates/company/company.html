@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Chủ Tuyển Dụng</title>
+    <!-- Thêm liên kết đến Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    .candidate-item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+        transition: border-color 0.3s;
+    }
+
+    /* Hiệu ứng hover cho các thẻ div có lớp candidate-item */
+    .candidate-item:hover {
+        border-color: #007bff;
+    }
+</style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#" th:href="@{/}">Trang Chủ</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/post-job}">Tìm ứng viên</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/post-job}">Đăng tin</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/profile-company/{id}(id=${company.getId()})}">Hồ sơ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" th:href="@{/post-vacancy}">Đăng xuất</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<!-- Nội dung trang chủ -->
+<div class="container mt-3">
+    <h2>Candidate List</h2>
+
+    <!-- Display candidate information -->
+    <div th:each="candates:${candidates}"  class="candidate-item">
+        <div th:if="${candates != null}">
+            <h4>info</h4>
+            <p th:text="'ID: ' + ${candates.id}"></p>
+            <p th:text="'Full Name: ' + ${candates.fullName}"></p>
+            <hr>
+            <h4>Skills:</h4>
+            <ul>
+                <li th:each="skill : ${candates.getCandidateSkills()}">
+                    <p th:text="'Skill: ' + ${skill.skill.skillName + ' - ' + skill.skill.skillDescription}"></p>
+                </li>
+            </ul>
+            <hr>
+            <a type="button" class="btn btn-primary" th:href="@{/profile/{id}(id=${candates.id})}">View Profile</a>
+            <button type="button" class="btn btn-primary" th:href="@{/profile/{id}/edit(id=${candates.id})}">Email</button>
+        </div>
+
+    </div>
+
+    <nav aria-label="Page navigation example">
+        <div th:if="${candidates.totalPages > 1}">
+            <ul class="pagination">
+                <li th:class="${candidates.number == 0} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/company?page=${candidates.number - 1}&size=${candidates.size}}">Previous</a>
+                </li>
+                <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
+                    th:class="${pageNumber == candidates.number} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{'/company'(page=${pageNumber},size=${candidates.size})}" th:text="${pageNumber + 1}"></a>
+                </li>
+
+                <li th:class="${candidates.number == candidates.totalPages - 1} ? 'page-item disabled' : 'page-item'">
+                    <a class="page-link" th:href="@{/company?page=${candidates.number + 1}&size=${candidates.size}}">Next</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Nội dung trang chủ sẽ được thêm vào đây -->
+</div>
+<script>
+    $(document).ready(function() {
+        // Apply Select2 to the position and city select elements
+        $('#position').select2();
+        $('#city').select2();
+    });
+</script>
+<!-- Thêm liên kết đến Bootstrap JS và Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

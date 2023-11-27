@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 public class Experience implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column(columnDefinition = "date")
     private LocalDate toDate;
@@ -27,4 +28,12 @@ public class Experience implements Serializable {
     private String role;
     @Column
     private String workDescription;
+
+    public Experience(LocalDate now, Candidate candidate, LocalDate now1, String name, String position) {
+        this.toDate=now;
+        this.candidate=candidate;
+        this.fromDate=now1;
+        this.companyName=name;
+        this.role=position;
+    }
 }
