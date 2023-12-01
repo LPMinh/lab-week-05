@@ -31,7 +31,8 @@
 <img width="332" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/44985df3-f5d8-4cd2-833e-8321e27eb715">
 <p>khi nhấn nút gửi email của trang cá nhân candidate sẽ hiện lên form gửi email với email người gửi là email của ứng viên.</p>
 <h1>Trang hồ sơ company</h1>
-<img width="869" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/511e508c-e514-4b85-bf7e-01eb9b49fa8c">
+<img width="854" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/0ae516c5-af5f-410e-bde8-49e2a9fee868">
+
 <p>Chức năng: Đăng bài việc làm,chỉnh sửa thông tin cá nhân,Thêm xóa sửa job</p>
 <h1>Form thêm job</h1>
 <img width="578" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/1543d023-53b1-4876-bf56-45c959277826">
