@@ -1,4 +1,6 @@
 # lab-week-05
+<h1>Web hỗ trợ ứng cử viên tìm việc làm cũng như giúp các nhà tuyển dụng tìm ứng viên</h1>
+<h1>Các công nghệ sử dụng: Spring data jpa,spring mvc,spring boot,spring email,mariadb,thymleaf</h1>
 <h1>Đăng nhập</h1>
 <img width="622" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/ac58c000-568a-4db2-a82c-eea5a20ae2ad">
 <br>
