@@ -15,7 +15,6 @@
 <img width="229" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/160f7f1b-c6c9-460a-bd53-f35de9447b79">
 <h1>home candidate</h1>
 <img width="947" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/7cb1e817-b330-45f4-bf3c-c3a3180707c4">
-
 <p>Chức năng <br>Tìm kiếm theo từ khóa,level,địa chỉ<br>Phân trang<br>Gợi ý công việt gần bạn hoặc phù hợp<br>Đăng xuất</p>
 <h1>Trang hồ sơ Candidate</h1>
 <img width="791" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/1fb16d7a-06e4-420f-a00d-1dfb202ffd65">
@@ -23,7 +22,8 @@
 <h1>Trang edit kinh nghiệm</h1>
 <img width="508" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/7ec9ca5e-152d-404d-9030-ebb042851d8d">
 <h1>Trang chủ dành cho company</h1>
-<img width="954" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/def417a1-c353-4ade-b5f6-58e6a85017e9">
+<img width="953" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/975fea4d-43b9-4215-8e87-73b853bd9e05">
+
 <p>Chức năng:Hiển thị các candidate,phân trang,xem chi tiết trang cá nhân candidate</p>
 <h1>Chi tiết trang cá nhân candidate</h1>
 <img width="531" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/83c788d0-489c-42e0-a37e-10652b0c1ae7">
