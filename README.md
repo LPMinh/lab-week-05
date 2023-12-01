@@ -14,7 +14,8 @@
 <h1>tạo company</h1>
 <img width="229" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/160f7f1b-c6c9-460a-bd53-f35de9447b79">
 <h1>home candidate</h1>
-<img width="959" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/83cd8cdd-c30f-417b-be2f-bf5c628e792a">
+<img width="947" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/7cb1e817-b330-45f4-bf3c-c3a3180707c4">
+
 <p>Chức năng <br>Tìm kiếm theo từ khóa,level,địa chỉ<br>Phân trang<br>Gợi ý công việt gần bạn hoặc phù hợp<br>Đăng xuất</p>
 <h1>Trang hồ sơ Candidate</h1>
 <img width="791" alt="image" src="https://github.com/LPMinh/lab-week-05/assets/95513996/1fb16d7a-06e4-420f-a00d-1dfb202ffd65">
