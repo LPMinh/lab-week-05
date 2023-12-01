@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -68,6 +69,22 @@ public class CompanyController {
            System.out.println("success");
         }
         return "redirect:/profile-company/"+id;
+    }
+    @GetMapping("/delete-job/{id}")
+    public String deleteJob(@PathVariable("id") long id, HttpSession session){
+        Account account= (Account) session.getAttribute("account");
+        Company company=companyRepository.findCompanyByAccount_Id(account.getId());
+
+        Job job=jobRepository.findById(id).get();
+        List<Job> jobs=company.getJobs();
+        jobs.remove(job);
+        company.setJobs(jobs);
+        job.setCompany(null);
+        if(companyRepository.save(company)!=null){
+            jobRepository.delete(job);
+            System.out.println("remove success: "+job.getName());
+        }
+        return "redirect:/profile-company/"+company.getId();
     }
 
 }

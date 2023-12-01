@@ -2,6 +2,8 @@ package com.minh.labweek05.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,9 +18,10 @@ public class Job implements java.io.Serializable {
     @Column
     private String name;
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     @JoinColumn(name = "com_id")
     private Company company;
-    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "job")
+    @OneToMany(cascade = CascadeType.MERGE,fetch = FetchType.LAZY,mappedBy = "job",orphanRemoval = true)
     private List<JobSkill> jobSkills=new ArrayList<JobSkill>();
     @Column
     private String description;

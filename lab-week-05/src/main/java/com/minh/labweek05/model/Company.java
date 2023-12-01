@@ -2,6 +2,8 @@ package com.minh.labweek05.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +31,7 @@ public class Company implements Serializable {
     @Column
     private String email;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "company")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Job> jobs=new ArrayList<Job>();
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
