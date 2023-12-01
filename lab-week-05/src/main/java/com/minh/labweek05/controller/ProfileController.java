@@ -3,6 +3,7 @@ package com.minh.labweek05.controller;
 import com.minh.labweek05.model.Account;
 import com.minh.labweek05.model.Candidate;
 import com.minh.labweek05.model.Company;
+import com.minh.labweek05.model.Email;
 import com.minh.labweek05.repositories.CandidateRepository;
 import com.minh.labweek05.repositories.CompanyRepository;
 import jakarta.servlet.http.HttpSession;
@@ -22,6 +23,8 @@ public class ProfileController {
 
     @GetMapping("/profile/{id}")
     public String profile(@PathVariable("id") Long id, Model model, HttpSession session){
+        Email email=new Email();
+        model.addAttribute("email",email);
         Candidate candidate=candidateRepository.findById(id).get();
         model.addAttribute("candidate",candidate);
         Account account= (Account) session.getAttribute("account");

@@ -89,25 +89,26 @@
       </div>
     </div>
   </div>
-  <nav aria-label="Page navigation example">
-    <div th:if="${jobPage.totalPages > 1}">
+  <div th:if="${jobPage.totalPages > 1}">
+    <nav aria-label="Page navigation">
       <ul class="pagination">
-        <li th:class="${jobPage.number == 0} ? 'page-item disabled' : 'page-item'">
-          <a class="page-link" th:href="@{/candidate?page=${jobPage.number - 1}&size=${jobPage.size}}">Previous</a>
+        <li th:class="${jobPage.first} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" th:href="@{/search-job(searchTerm=${searchTerm},level=${level})}" aria-label="First">
+            <span aria-hidden="true">&laquo;&laquo;</span>
+          </a>
         </li>
-
-        <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
-            th:class="${pageNumber == jobPage.number} ? 'page-item active' : 'page-item'">
-          <a class="page-link" th:href="@{'/candidate'(page=${pageNumber},size=${jobPage.size})}" th:text="${pageNumber + 1}"></a>
-
+        <li th:each="pageNumber : ${#numbers.sequence(1, jobPage.totalPages)}"
+            th:class="${pageNumber == jobPage.number + 1} ? 'page-item active' : 'page-item'">
+          <a class="page-link"  th:href="@{/search-job(searchTerm=${searchTerm},level=${level})}" th:text="${pageNumber}"></a>
         </li>
-
-        <li th:class="${jobPage.number == jobPage.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-          <a class="page-link" th:href="@{/candidate?page=${jobPage.number + 1}&size=${jobPage.size}}">Next</a>
+        <li th:class="${jobPage.last} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link"  th:href="@{/search-job(searchTerm=${searchTerm},level=${level})}" aria-label="Last">
+            <span aria-hidden="true">&raquo;&raquo;</span>
+          </a>
         </li>
       </ul>
-    </div>
-  </nav>
+    </nav>
+  </div>
 
   <!-- Nội dung trang chủ sẽ được thêm vào đây -->
 </div>

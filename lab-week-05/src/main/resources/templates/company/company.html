@@ -31,16 +31,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/post-job}">Tìm ứng viên</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/post-job}">Đăng tin</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="#" th:href="@{/profile-company/{id}(id=${company.getId()})}">Hồ sơ</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:href="@{/post-vacancy}">Đăng xuất</a>
+                <a class="nav-link" href="#" th:href="@{/logout}">Đăng xuất</a>
             </li>
 
         </ul>
@@ -51,25 +45,36 @@
 <!-- Nội dung trang chủ -->
 <div class="container mt-3">
     <h2>Candidate List</h2>
+    <div th:each="candidate : ${candidates}" class="candidate-item">
+        <div class="card mb-4">
+            <div class="card-body">
+                <h4 class="card-title">
+                    <span class="text-primary"><i class="bi bi-person"></i></span>
+                    Candidate Information
+                </h4>
+                <p class="card-text"><strong>ID:</strong> <span th:text="${candidate.id}"></span></p>
+                <p class="card-text"><strong>Full Name:</strong> <span th:text="${candidate.fullName}"></span></p>
+            </div>
 
-    <!-- Display candidate information -->
-    <div th:each="candates:${candidates}"  class="candidate-item">
-        <div th:if="${candates != null}">
-            <h4>info</h4>
-            <p th:text="'ID: ' + ${candates.id}"></p>
-            <p th:text="'Full Name: ' + ${candates.fullName}"></p>
-            <hr>
-            <h4>Skills:</h4>
-            <ul>
-                <li th:each="skill : ${candates.getCandidateSkills()}">
-                    <p th:text="'Skill: ' + ${skill.skill.skillName + ' - ' + skill.skill.skillDescription}"></p>
-                </li>
-            </ul>
-            <hr>
-            <a type="button" class="btn btn-primary" th:href="@{/profile/{id}(id=${candates.id})}">View Profile</a>
-            <button type="button" class="btn btn-primary" th:href="@{/profile/{id}/edit(id=${candates.id})}">Email</button>
+            <div class="card-body">
+                <h4 class="card-title">
+                    <span class="text-success"><i class="bi bi-check-square"></i></span>
+                    Skills
+                </h4>
+                <ul class="list-group list-group-flush">
+                    <li th:each="skill : ${candidate.getCandidateSkills()}" class="list-group-item">
+                        <span class="text-info" th:text="'Skill: ' + ${skill.skill.skillName + ' - ' + skill.skill.skillDescription}"></span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-footer">
+                <a type="button" class="btn btn-primary" th:href="@{/profile/{id}(id=${candidate.id})}">
+                    <span class="text-light"><i class="bi bi-eye"></i></span>
+                    View Profile
+                </a>
+            </div>
         </div>
-
     </div>
 
     <nav aria-label="Page navigation example">

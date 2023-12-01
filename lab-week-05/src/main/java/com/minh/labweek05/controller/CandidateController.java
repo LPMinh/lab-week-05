@@ -48,96 +48,74 @@ public class CandidateController {
         }
 
         List<Job> jobSuggest = Stream.concat(jobsNearYou.stream(), jobsBySkill.stream()).distinct().toList();
-        List<Job> jobAll=jobRepository.findAll();
-        int totalJobs = jobAll.size();
-        int totalPages = (int) Math.ceil((double) totalJobs / size);
-
-        int maxPagesToShow = 5;
-        int startPage = Math.max(1, page - maxPagesToShow / 2);
-        int endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-
-        int startItem = (page - 1) * size;
-        int endItem = Math.min(startItem + size, totalJobs);
-
-        List<Job> paginatedJobs = jobAll.subList(startItem, endItem);
-
-        model.addAttribute("jobPage", new PageImpl<>(paginatedJobs, PageRequest.of(page - 1, size), totalJobs));
+        Page<Job> jobAll = jobRepository.findAll(PageRequest.of(page - 1, size));
+        model.addAttribute("jobPage", jobAll);
         model.addAttribute("jobsNearYou", jobsNearYou);
         model.addAttribute("jobsBySkill", jobsBySkill);
         model.addAttribute("jobSuggest", jobSuggest);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
         return "candidates/candidate";
     }
-    @GetMapping("/candidates/deleteExperience/{id}")
-    public String deleteExperience(@PathVariable("id") Long id, HttpSession session){
-        Candidate candidate= (Candidate) session.getAttribute("candidate");
 
-        Optional<Candidate> candidateOptional=candidateRepository.findById(candidate.getId());
-        if (candidateOptional.isPresent()){
-            Candidate candidate1=candidateOptional.get();
-            candidate1.getExperience().removeIf(experience -> experience.getId()==id);
+    @GetMapping("/candidates/deleteExperience/{id}")
+    public String deleteExperience(@PathVariable("id") Long id, HttpSession session) {
+        Candidate candidate = (Candidate) session.getAttribute("candidate");
+
+        Optional<Candidate> candidateOptional = candidateRepository.findById(candidate.getId());
+        if (candidateOptional.isPresent()) {
+            Candidate candidate1 = candidateOptional.get();
+            candidate1.getExperience().removeIf(experience -> experience.getId() == id);
             candidateRepository.save(candidate1);
         }
-        return "redirect:/profile/"+candidate.getId();
+        return "redirect:/profile/" + candidate.getId();
     }
+
     @GetMapping("/candidates/editExperience/{id}")
-    public String editExperience(@PathVariable("id") long experienceId, Model model,HttpSession session) {
+    public String editExperience(@PathVariable("id") long experienceId, Model model, HttpSession session) {
         // Retrieve the experience by ID from the database (you need to implement this method)
         Experience experience = experienceRepository.findById(experienceId).orElse(null);
-        Candidate candidate= (Candidate) session.getAttribute("candidate");
+        Candidate candidate = (Candidate) session.getAttribute("candidate");
         if (experience != null) {
             model.addAttribute("experience", experience);
             return "candidates/edit-experience";
         } else {
 
-            return "redirect:/profile/"+candidate.getId(); // Redirect to the candidate profile page
+            return "redirect:/profile/" + candidate.getId(); // Redirect to the candidate profile page
         }
     }
 
     @PostMapping("/saveExperience")
-    public String saveExperience(@ModelAttribute Experience experience,HttpSession session) {
-        Candidate candidate= (Candidate) session.getAttribute("candidate");
+    public String saveExperience(@ModelAttribute Experience experience, HttpSession session) {
+        Candidate candidate = (Candidate) session.getAttribute("candidate");
         // Save the updated experience to the database (you need to implement this method)
         experienceRepository.save(experience);
-        return "redirect:/profile/"+candidate.getId(); // Redirect to the candidate profile page
+        return "redirect:/profile/" + candidate.getId(); // Redirect to the candidate profile page
     }
+
     @GetMapping("/search-job")
-    public String searchJob(@RequestParam("searchTerm")String query,@RequestParam("level")String skillLevel,Model model,HttpSession session,@RequestParam(name = "page", defaultValue = "1") int page,
-                            @RequestParam(name = "size", defaultValue = "6") int size){
-        SkillLevel skillLevel1=SkillLevel.valueOf(skillLevel);
-        System.out.println("search page");
-        List<Job> jobs=jobRepository.findJobBySkillAndLevel(query,skillLevel1);
+    public String searchJob(@RequestParam("searchTerm") String query, @RequestParam("level") String skillLevel, Model model, HttpSession session, @RequestParam(name = "page", defaultValue = "1") int page,
+                            @RequestParam(name = "size", defaultValue = "6") int size) {
+        SkillLevel skillLevel1 = SkillLevel.valueOf(skillLevel);
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<Job> jobPage = jobRepository.findJobBySkillAndLevel(query, skillLevel1, pageable);
+
         Account account = (Account) session.getAttribute("account");
         SkillLevel[] skillLevels = SkillLevel.values();
         model.addAttribute("skillLevels", skillLevels);
         Candidate candidate = candidateRepository.findCandidateByAccount_Id(account.getId());
         model.addAttribute("candidate", candidate);
 
+        model.addAttribute("jobPage", jobPage);
+        model.addAttribute("startPage", jobPage.getPageable().getPageNumber() + 1);
+        model.addAttribute("endPage", Math.min(jobPage.getTotalPages(), jobPage.getPageable().getPageNumber() + size));
 
-
-
-        int totalJobs = jobs.size();
-        int totalPages = (int) Math.ceil((double) totalJobs / size);
-
-        int maxPagesToShow = 5;
-        int startPage = Math.max(1, page - maxPagesToShow / 2);
-        int endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
-
-        int startItem = (page - 1) * size;
-        int endItem = Math.min(startItem + size, totalJobs);
-
-        List<Job> paginatedJobs = jobs.subList(startItem, endItem);
-
-        model.addAttribute("jobPage", new PageImpl<>(paginatedJobs, PageRequest.of(page - 1, size), totalJobs));
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
-
+        model.addAttribute("searchTerm", query);
+        model.addAttribute("level", skillLevel);
         return "candidates/Search-page";
 
-    }
 
     }
+
+
+}
 
 

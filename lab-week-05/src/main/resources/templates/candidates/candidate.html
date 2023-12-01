@@ -60,82 +60,81 @@
     <button type="submit" class="btn btn-primary">Tìm kiếm</button>
   </form>
   <h3>Gợi ý Công việc phù hợp/ ở gần bạn</h3>
-  <div th:each="job : ${jobSuggest}">
-    <div class="card mb-3">
-      <div class="card-header">
-        <h5 th:text="${job.getName()}"></h5>
-      </div>
-      <div class="card-body">
-        <p th:text="${job.getDescription()}"></p>
-
-        <h6>Company:
-          <span th:text="${job.company.name}"></span></h6>
-        <p>Address:<br>
-          City:  <span th:text="${job.company.address.city}"></span>
-            <br>
-          Street: <span th:text="${job.company.address.street}"></span>
-            <br>
-            Zip Code: <span th:text="${job.company.address.zipCode}"></span>
-
-        </p>
-
-        <h6>Skills Required:</h6>
-        <ul>
-          <li th:each="jobSkill : ${job.jobSkills}">
-            <span th:text="${jobSkill.skill.skillName}"></span> - <span th:text="${jobSkill.skillLevel}"></span>
-          </li>
-        </ul>
-      </div>
+  <div th:each="job : ${jobSuggest}" class="card mb-3">
+    <div class="card-header bg-info text-white">
+      <h5 th:text="${job.getName()}"></h5>
     </div>
-  </div>
-    <h3>Các công việc khác</h3>
-  <div th:each="job : ${jobPage.getContent()}">
-    <div class="card mb-3">
-      <div class="card-header">
-        <h5 th:text="${job.getName()}"></h5>
-      </div>
-      <div class="card-body">
-        <p th:text="${job.getDescription()}"></p>
+    <div class="card-body">
+      <p class="card-text" th:text="${job.getDescription()}"></p>
 
-        <h6>Company:
-          <span th:text="${job.company.name}"></span></h6>
+      <div class="card-subtitle mb-2 text-muted">
+        <h6>Company: <span th:text="${job.company.name}"></span></h6>
         <p>Address:<br>
-          City:  <span th:text="${job.company.address.city}"></span>
+          City: <span th:text="${job.company.address.city}"></span>
           <br>
           Street: <span th:text="${job.company.address.street}"></span>
           <br>
           Zip Code: <span th:text="${job.company.address.zipCode}"></span>
-
         </p>
-
-        <h6>Skills Required:</h6>
-        <ul>
-          <li th:each="jobSkill : ${job.jobSkills}">
-            <span th:text="${jobSkill.skill.skillName}"></span> - <span th:text="${jobSkill.skillLevel}"></span>
-          </li>
-        </ul>
       </div>
-    </div>
-  </div>
-  <nav aria-label="Page navigation example">
-    <div th:if="${jobPage.totalPages > 1}">
-      <ul class="pagination">
-        <li th:class="${jobPage.number == 0} ? 'page-item disabled' : 'page-item'">
-          <a class="page-link" th:href="@{/candidate?page=${jobPage.number - 1}&size=${jobPage.size}}">Previous</a>
-        </li>
 
-        <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}"
-            th:class="${pageNumber == jobPage.number} ? 'page-item active' : 'page-item'">
-          <a class="page-link" th:href="@{'/candidate'(page=${pageNumber},size=${jobPage.size})}" th:text="${pageNumber + 1}"></a>
-
-        </li>
-
-        <li th:class="${jobPage.number == jobPage.totalPages - 1} ? 'page-item disabled' : 'page-item'">
-          <a class="page-link" th:href="@{/candidate?page=${jobPage.number + 1}&size=${jobPage.size}}">Next</a>
+      <h6>Skills Required:</h6>
+      <ul class="list-unstyled">
+        <li th:each="jobSkill : ${job.jobSkills}">
+          <span class="badge badge-primary mr-2" th:text="${jobSkill.skill.skillName}"></span>
+          <span class="badge badge-secondary" th:text="${jobSkill.skillLevel}"></span>
         </li>
       </ul>
     </div>
-  </nav>
+  </div>
+    <h3>Các công việc khác</h3>
+  <div th:each="job : ${jobSuggest}" class="card mb-3">
+    <div class="card-header bg-info text-white">
+      <h5 th:text="${job.getName()}"></h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text" th:text="${job.getDescription()}"></p>
+
+      <div class="card-subtitle mb-2 text-muted">
+        <h6>Company: <span th:text="${job.company.name}"></span></h6>
+        <p>Address:<br>
+          City: <span th:text="${job.company.address.city}"></span>
+          <br>
+          Street: <span th:text="${job.company.address.street}"></span>
+          <br>
+          Zip Code: <span th:text="${job.company.address.zipCode}"></span>
+        </p>
+      </div>
+
+      <h6>Skills Required:</h6>
+      <ul class="list-unstyled">
+        <li th:each="jobSkill : ${job.jobSkills}">
+          <span class="badge badge-primary mr-2" th:text="${jobSkill.skill.skillName}"></span>
+          <span class="badge badge-secondary" th:text="${jobSkill.skillLevel}"></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div th:if="${jobPage.totalPages > 1}">
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li th:class="${jobPage.first} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" th:href="@{/candidate?page=1}" aria-label="First">
+            <span aria-hidden="true">&laquo;&laquo;</span>
+          </a>
+        </li>
+        <li th:each="pageNumber : ${#numbers.sequence(1, jobPage.totalPages)}"
+            th:class="${pageNumber == jobPage.number + 1} ? 'page-item active' : 'page-item'">
+          <a class="page-link" th:href="@{/candidate(page=${pageNumber})}" th:text="${pageNumber}"></a>
+        </li>
+        <li th:class="${jobPage.last} ? 'page-item disabled' : 'page-item'">
+          <a class="page-link" th:href="@{/candidate(page=${jobPage.totalPages})}" aria-label="Last">
+            <span aria-hidden="true">&raquo;&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
   <!-- Nội dung trang chủ sẽ được thêm vào đây -->
 </div>

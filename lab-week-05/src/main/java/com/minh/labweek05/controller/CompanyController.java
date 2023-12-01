@@ -67,7 +67,6 @@ public class CompanyController {
         if(companyRepository.save(company)!=null){
            System.out.println("success");
         }
-
         return "redirect:/profile-company/"+id;
     }
 

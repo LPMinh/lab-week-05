@@ -1,16 +1,15 @@
 package com.minh.labweek05.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data@NoArgsConstructor@AllArgsConstructor@ToString
 @Table(name = "experience")
+@Getter
+@Setter
 @Entity
 public class Experience implements Serializable {
     @Id

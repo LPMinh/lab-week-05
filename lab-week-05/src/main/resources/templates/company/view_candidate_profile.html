@@ -59,6 +59,40 @@
 <body>
 
 <div class="container">
+  <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="emailModalLabel">Write Email</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form to write an email -->
+          <form th:action="@{/send-email}" th:method="post" th:object="${email}">
+            <!-- Add form fields for email subject, recipient, and body -->
+
+            <div class="form-group">
+              <label for="emailSubject">Subject:</label>
+              <input th:field="*{subject}" type="text" class="form-control" id="emailSubject" name="emailSubject" required>
+            </div>
+            <div class="form-group">
+              <label for="emailBody">Body:</label>
+              <textarea th:field="*{body}" class="form-control" id="emailBody" name="emailBody" rows="5" required></textarea>
+            </div>
+            <input type="hidden" name="candidateId" th:value="${candidate.id}">
+            <input type="hidden" name="candidateEmail" th:value="${candidate.email}">
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Send Email</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emailModal">Email</button>
   <h2>Candidate Profile</h2>
   <p th:text="'ID: ' + ${candidate.id}"></p>
   <p th:text="'Full Name: ' + ${candidate.fullName}"></p>
@@ -85,7 +119,6 @@
       <th>Start Date</th>
       <th>End Date</th>
       <th>Description</th>
-      <th>Options</th>
     </tr>
     </thead>
     <tbody>
